@@ -1,3 +1,5 @@
+#puppet manifest to config our servers
+
 exec { 'apt-update':
   command     => 'apt-get update',
   refreshonly => true,
