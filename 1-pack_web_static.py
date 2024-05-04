@@ -7,19 +7,18 @@ using the function do_pack.
 
 from datetime import datetime
 from fabric.api import local
-from fabric.decorators import task
 
-@task
+
 def do_pack():
     """task to create a .tgz archive from the contents
     of the web_static folder
     """
-    local("mkdir -p versions")
-    t = datetime.now()
-    name = "web_static_{}{}{}{}{}{}.tgz".format(
-            t.year, t.month, t.day, t.hour, t.minute, t.second)
-    file = local("tar -cvzf versions/{} web_static".format(name))
-    if file.succeeded:
+    try:
+        local("mkdir -p versions")
+        TA = datetime.now()
+        name = "web_static_{}{}{}{}{}{}.tgz".format(
+                TA.year, TA.month, TA.day, TA.hour, TA.minute, TA.second)
+        file = local("tar -cvzf versions/{} web_static".format(name))
         return "versions/{}".format(name)
-    else:
+    except:
         return None
