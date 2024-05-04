@@ -16,19 +16,19 @@ def do_deploy(ar_path):
     """
     deploy our configs to our servers
     """
-    if (ar_path is None):
+    if exists(ar_path) is False:
         return False
     try:
         file_p = ar_path.split("/")[-1]
         file = file_p.split(".")[0]
-        server_path = "/tmp/{}".fomat(file_p)
-        versions_path = "/data/web_static/releases/{}/".format(file)
+        server_path = "/tmp/"
+        versions_path = "/data/web_static/releases/"
         put(ar_path, server_path)
-        run("mkdir -p {}".format(versions_path))
-        run("tar -xzf {} -C {}".format(server_path, versions_path))
-        run("rm {}".format(server_path))
+        run("mkdir -p {}{}".format(versions_path, file))
+        run("tar -xzf {} -C {}{}".format(server_path, file_p, versions_path, file))
+        run("rm {}{}".format(server_path, file_p))
         run("rm -rf /data/web_static/current")
-        run("ln -s {} /data/web_static/current".format(versions_path))
+        run("ln -s {}{}/ /data/web_static/current".format(versions_path, file))
         return True
-    except Exception:
+    except:
         return False
