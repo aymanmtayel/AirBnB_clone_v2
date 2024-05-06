@@ -20,5 +20,5 @@ def do_pack():
                 TA.year, TA.month, TA.day, TA.hour, TA.minute, TA.second)
         file = local("tar -cvzf versions/{} web_static".format(name))
         return "versions/{}".format(name)
-    except:
+    except Exception:
         return None
